@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: app-nginx
-        image: <BUILD_TAG>
+        image: <BUILD_NAME>:<BUILD_TAG>
         lifecycle:
           postStart:
             exec:
@@ -45,20 +45,7 @@ spec:
       - name: www-conf
         configMap:
           name: www-conf
+      imagePullSecrets:
+      - name: registry
 
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    cattle.io/creator: norman
-  name: prd-app-svc-nginx
-  namespace: prd-app
-spec:
-  selector:
-    app: nginx
-  ports:
-  - name: http
-    port: 80
-    protocol: TCP
-    targetPort: 80
+
