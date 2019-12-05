@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: nginx-deployment
+  namespace: prd-app
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: app-nginx
+        image: <BUILD_NAME>:<BUILD_TAG>
+        lifecycle:
+          postStart:
+            exec:
+              command:
+                - "sh"
+                - "-c"
+                - "mkdir /data/logs/www /data/web/www -p"
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /data/logs/www
+          name: web-log
+        - mountPath: /data/web/www 
+          name: web-data
+        - mountPath: /etc/nginx/conf.d/
+          name: www-conf
+          readOnly: true
+      volumes: 
+      - name: web-log
+        hostPath:
+          path: /data/logs/www
+      - name: web-data
+        hostPath: 
+          path: /data/web-data/www
+      - name: www-conf
+        configMap:
+          name: www-conf
+      imagePullSecrets:
+      - name: registry
+
+

@@ -1,0 +1,6 @@
+FROM nginx
+RUN mkdir /data/logs /data/web -p
+COPY web /data/web
+RUN chown -R nginx.nginx /data
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN echo 'Asia/Shanghai' >/etc/timezone
