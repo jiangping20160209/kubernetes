@@ -30,8 +30,6 @@ spec:
         volumeMounts:
         - mountPath: /data/logs/www
           name: web-log
-        - mountPath: /data/web/www 
-          name: web-data
         - mountPath: /etc/nginx/conf.d/
           name: www-conf
           readOnly: true
@@ -39,9 +37,6 @@ spec:
       - name: web-log
         hostPath:
           path: /data/logs/www
-      - name: web-data
-        hostPath: 
-          path: /data/web-data/www
       - name: www-conf
         configMap:
           name: www-conf
