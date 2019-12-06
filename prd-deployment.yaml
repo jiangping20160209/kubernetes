@@ -33,9 +33,9 @@ spec:
         - mountPath: /etc/nginx/conf.d/
           name: www-conf
           readOnly: true
-        - mountPath: /etc/nginx/
+        - mountPath: /etc/nginx/nginx.conf
           name: nginx-conf
-          readOnly: true
+          subPath: nginx.conf
       volumes: 
       - name: web-log
         hostPath:
@@ -46,5 +46,8 @@ spec:
       - name: nginx-conf
         configMap:
           name: nginx-conf
+          items:
+          - key: nginx.conf
+            path: nginx.conf
       imagePullSecrets:
       - name: registry
