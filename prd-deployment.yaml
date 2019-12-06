@@ -33,6 +33,9 @@ spec:
         - mountPath: /etc/nginx/conf.d/
           name: www-conf
           readOnly: true
+        - mountPath: /data/logs/nginx/
+          name: nginx-conf
+          readOnly: true
       volumes: 
       - name: web-log
         hostPath:
