@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment 
 metadata:
-  name: nginx-deployment
-  namespace: test-app
+  name: <PROJECT_NAME>
+  namespace: <ENV>-app
   labels:
-    app: nginx
+    app: <PROJECT_NAME>
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx
+      app: <PROJECT_NAME>
   template:
     metadata:
       labels:
-        app: nginx
+        app: <PROJECT_NAME>
     spec:
       containers:
-      - name: app-nginx
+      - name: <APP-PROJECT>
         image: <BUILD_NAME>:<BUILD_TAG>
         lifecycle:
           postStart:
@@ -24,11 +24,11 @@ spec:
               command:
                 - "sh"
                 - "-c"
-                - "mkdir /data/logs/www /data/web/www -p"
+                - "mkdir /data/logs/<PROJECT_NAME> /data/web/<PROJECT_NAME> -p;chown -R nginx.nginx /data"
         ports:
         - containerPort: 80
         volumeMounts:
-        - mountPath: /data/logs/www
+        - mountPath: /data/logs/<PROJECT_NAME>
           name: web-log
         - mountPath: /etc/nginx/conf.d/
           name: www-conf
@@ -36,11 +36,9 @@ spec:
       volumes: 
       - name: web-log
         hostPath:
-          path: /data/logs/www
+          path: /data/logs/<PROJECT_NAME>
       - name: www-conf
         configMap:
           name: www-conf
       imagePullSecrets:
       - name: registry
-
-
