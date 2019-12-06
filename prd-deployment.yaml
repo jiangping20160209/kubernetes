@@ -16,7 +16,7 @@ spec:
         app: <PROJECT_NAME>
     spec:
       containers:
-      - name: <APP-PROJECT>
+      - name: app-<PROJECT_NAME>
         image: <BUILD_NAME>:<BUILD_TAG>
         lifecycle:
           postStart:
