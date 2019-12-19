@@ -33,7 +33,7 @@ spec:
         - mountPath: /data/logs/<PROJECT_NAME>
           name: web-log
         - mountPath: /etc/nginx/conf.d/
-          name: www-conf
+          name: <PROJECT_NAME>-conf
           readOnly: true
         - mountPath: /etc/nginx/nginx.conf
           name: nginx-conf
@@ -45,9 +45,9 @@ spec:
       - name: nginx-log
         hostPath:
           path: /data/logs/nginx
-      - name: www-conf
+      - name: <PROJECT_NAME>-conf
         configMap:
-          name: www-conf
+          name: <PROJECT_NAME>-conf
       - name: nginx-conf
         configMap:
           name: nginx-conf
